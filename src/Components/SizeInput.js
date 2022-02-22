@@ -1,20 +1,21 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 
-const SizeInput = () => {
-    const [size, setSize] = useState(0);
-    return(
-        <StyledForm>
-            <StyledInput onChange={e => setSize(e.target.value)} value={size} type={"number"} />
-        </StyledForm>
+const SizeInput = ({detectSize}) => {
+    const [size, setSize] = useState(3);
+    return (
+        <StyledInput
+            onChange={e => {
+                setSize(e.target.value);
+                detectSize(e.target.value)
+            }}
+            value={size}
+            type={"text"}
+        />
     )
 }
 
 export default SizeInput;
-
-const StyledForm = styled.form`
-   
-`
 
 const StyledInput = styled.input`
   width: 5rem;
