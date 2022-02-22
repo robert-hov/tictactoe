@@ -5,6 +5,8 @@ import {click} from "@testing-library/user-event/dist/click";
 const TicTacBoard = ({size}) => {
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [xTurn, setXturn] = useState(true)
+    const [xWins, setXWins] = useState(0)
+    const [oWins, setOWins] = useState(0)
 
     const winner = () => {
         const winners = [
@@ -45,17 +47,16 @@ const TicTacBoard = ({size}) => {
 
         setXturn(!xTurn);
         setSquares(cloneSquares)
+        winnerCounter();
     }
 
-    // const TicTacItem = () => {
-    //     const items = [];
-    //     for (let i = 0; i < size ** 2; i++) {
-    //         items.push(
-    //             <StyledTicTacItem id={`button-${i}`} key={i} data-num={i} onClick={clickHandler}></StyledTicTacItem>
-    //         )
-    //     }
-    //     return items
-    // }
+
+
+    const winnerCounter = () => {
+        if(!winner()) return
+        if(winner() === 'x') setXWins(xWins + 1)
+        if(winner() === 'o') setOWins(oWins + 1)
+    }
 
     const TicTacItem = (i) => {
         return (
@@ -94,6 +95,7 @@ const TicTacBoard = ({size}) => {
             <StyledReset onClick={() => {
                 setSquares(Array(9).fill(null))
             }}>Reset</StyledReset>
+            <StyledWinners>X: {xWins} | O: {oWins} </StyledWinners>
         </>
     )
 }
@@ -105,9 +107,6 @@ const StyledTicTacContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 0.2rem;
   width: 150px;
-  background: #D3CCE3;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 `
 
@@ -127,12 +126,12 @@ const StyledInfo = styled.h2`
 
 const StyledWinner = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
-  color: greenyellow;
+  color: forestgreen;
 `
 
 const StyledDraw = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
-  color: yellow;
+  color: midnightblue;
 `
 
 const StyledXO = styled.div`
@@ -142,4 +141,9 @@ const StyledXO = styled.div`
 
 const StyledReset = styled.button`
   margin-top: 0.5rem;
+`
+
+const StyledWinners = styled.div`
+  font-family: 'Akaya Telivigala', cursive;
+
 `
