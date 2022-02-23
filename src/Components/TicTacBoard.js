@@ -1,29 +1,14 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import TicTacSquare from "./TicTacSquare"
+import {click} from "@testing-library/user-event/dist/click";
 
 const TicTacBoard = ({size}) => {
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const [length, setLength] = useState([]);
     const [xTurn, setXturn] = useState(true)
     const [xWins, setXWins] = useState(0)
     const [oWins, setOWins] = useState(0)
-    const [players, setPlayers] = useState('computer');
-
-    const TicTacItem = (i) => {
-        return (
-            <StyledTicTacItem
-                onClick={() => {
-                    if (winner()) return
-                    clickHandler(i)
-                }}
-            >
-                <StyledXO>
-                    {squares[i]}
-                </StyledXO>
-            </StyledTicTacItem>
-        )
-    }
-
-
 
     const winner = () => {
         const winners = [
@@ -56,62 +41,62 @@ const TicTacBoard = ({size}) => {
         return null
     }
 
-    const changePlayer = () => {
-        if(players === '2 players') setPlayers('computer')
-        else setPlayers('2 players')
+    const winnerCounter = () => {
+        if(!winner()) return
+        if(winner() === 'x') setXWins(xWins + 1)
+        if(winner() === 'o') setOWins(oWins + 1)
     }
 
     const clickHandler = (i) => {
+        if(winner()) return;
+        const cloneLength = length;
         const cloneSquares = squares;
+
         if (cloneSquares[i]) return
-        cloneSquares[i] = "x";
-        if(players === '2 players') setXturn(true);
-
-        if(players === 'computer') {
-            let randomI = 0;
-            while (true) {
-                randomI = Math.ceil(Math.random() * 8)
-                console.log(randomI)
-                if (!cloneSquares[randomI] && randomI !== 10) break;
-            }
-
-            cloneSquares[randomI] = "o";
-        }
+        cloneSquares[i] = xTurn ? "x" : "x";
         setSquares(cloneSquares)
+        console.log(cloneLength.length)
+
+        setXturn(!xTurn);
+
+        let randomI = 0;
+        if(cloneLength.length === 4) return
+        while(true) {
+            randomI = Math.ceil((Math.random() * 9) - 1)
+            if(!cloneSquares[randomI]) {
+                cloneSquares[randomI] = 'o';
+                cloneLength.push('o')
+                break;
+            }
+        }
+        setLength(cloneLength)
+
+        setSquares(cloneSquares)
+        winnerCounter();
+        console.log(cloneLength.length)
     }
 
-    // useEffect(() => {
-    //     winner();
-    //     draw();
-    // }, [squares])
-
-
-    const winnerCounter = () => {
-        if (!winner()) return
-        if (winner() === 'x') setXWins(xWins + 1)
-        if (winner() === 'o') setOWins(oWins + 1)
-    }
     return (
         <>
-            {/*{!draw() && !winner() && <StyledInfo>Now {xTurn ? 'x' : 'o'} turn</StyledInfo>}*/}
+            {!draw() && !winner() && <StyledInfo>Now {xTurn ? 'x' : 'o'} turn</StyledInfo>}
             {winner() && <StyledWinner>Winner is {winner()}</StyledWinner>}
             {draw() && <StyledDraw>It's a draw</StyledDraw>}
             <StyledTicTacContainer size={size}>
-                {TicTacItem(0)}
-                {TicTacItem(1)}
-                {TicTacItem(2)}
-                {TicTacItem(3)}
-                {TicTacItem(4)}
-                {TicTacItem(5)}
-                {TicTacItem(6)}
-                {TicTacItem(7)}
-                {TicTacItem(8)}
+                <TicTacSquare index={0} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={1} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={2} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={3} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={4} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={5} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={6} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={7} clickHandler={clickHandler} squares={squares}/>
+                <TicTacSquare index={8} clickHandler={clickHandler} squares={squares}/>
             </StyledTicTacContainer>
-            <StyledBtn onClick={() => {
+            <StyledReset onClick={() => {
                 setSquares(Array(9).fill(null))
-            }}>Reset</StyledBtn>
+                setLength([])
+            }}>Reset</StyledReset>
             <StyledWinners>X: {xWins} | O: {oWins} </StyledWinners>
-            <StyledBtn onClick={changePlayer}>{players}</StyledBtn>
         </>
     )
 }
@@ -123,18 +108,9 @@ const StyledTicTacContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 0.2rem;
   width: 150px;
-
 `
 
-const StyledTicTacItem = styled.button`
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border: 1px solid mediumpurple;
-  box-sizing: border-box;
-  cursor: pointer;
-  background-color: transparent;
-`
+
 
 const StyledInfo = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
@@ -150,12 +126,7 @@ const StyledDraw = styled.h2`
   color: midnightblue;
 `
 
-const StyledXO = styled.div`
-  font-family: 'Akaya Telivigala', cursive;
-  font-size: 1.5rem;
-`
-
-const StyledBtn = styled.button`
+const StyledReset = styled.button`
   margin-top: 0.5rem;
 `
 
