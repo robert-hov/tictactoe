@@ -60,6 +60,8 @@ const TicTacBoard = ({size}) => {
         setXturn(!xTurn);
 
         let randomI = 0;
+        winnerCounter();
+        if(winner())return;
         if(cloneLength.length === 4) return
         while(true) {
             randomI = Math.ceil((Math.random() * 9) - 1)
@@ -73,7 +75,7 @@ const TicTacBoard = ({size}) => {
 
         setSquares(cloneSquares)
         winnerCounter();
-        console.log(cloneLength.length)
+
     }
 
     return (
