@@ -22,7 +22,7 @@ const StyledTicTacItem = styled.button`
   position: relative;
   width: ${({size}) => size > 10 ? 20 : size > 5 ? 25 : size ? '50' : ''}px;
   height: ${({size}) => size > 10 ? 20 : size > 5 ? 25 : size ? '50' : ''}px;
-  border: 1px solid mediumpurple;
+  border: 1px solid white;
   box-sizing: border-box;
   cursor: pointer;
   background-color: transparent;
@@ -31,5 +31,6 @@ const StyledTicTacItem = styled.button`
 const StyledXO = styled.div`
   font-family: 'Akaya Telivigala', cursive;
   font-size: ${({size}) => size > 10 ? 0.9 : size > 5 ? 1.3 : size ? 1.5 : ''}rem;
+  color: white;
   line-height: 1;
 `

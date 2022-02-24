@@ -154,15 +154,21 @@ const StyledTicTacContainer = styled.div`
 
 const StyledInfo = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
+  line-height: 32.8px;
+
+  color: white;
 `
 
 const StyledWinner = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
+  line-height: 32.8px;
   color: forestgreen;
 `
 
 const StyledDraw = styled.h2`
   font-family: 'Roboto Serif', sans-serif;
+  line-height: 32.8px;
+
   color: midnightblue;
 `
 
@@ -172,4 +178,5 @@ const StyledReset = styled.button`
 
 const StyledWinners = styled.div`
   font-family: 'Akaya Telivigala', cursive;
+  color: white;
 `

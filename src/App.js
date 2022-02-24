@@ -25,5 +25,5 @@ const StyledContainer = styled.div`
   align-items: center;
   min-height: 100vh;
   padding: 1rem;
-  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-color: black;
 `

@@ -15,7 +15,6 @@ const SizeInput = ({detectSize}) => {
                 <StyledInput
                     onChange={e => {
                         setSize(e.target.value);
-
                     }}
                     min={3}
                     max={25}
@@ -44,6 +43,8 @@ const StyledLabelText = styled.p`
   text-align: center;
   margin-top: 0;
   margin-bottom: 0.25rem;
+  
+  color: white;
 
   font-family: 'Roboto Serif', sans-serif;
   font-size: 0.75rem;
@@ -53,6 +54,9 @@ const StyledInput = styled.input`
   width: 5rem;
   padding: 0.1rem 0.5rem;
   border-radius: 0.5rem;
+  border: 1px solid white;
+  
+  color: white;
   outline: none;
   appearance: none;
   -webkit-appearance: none;
