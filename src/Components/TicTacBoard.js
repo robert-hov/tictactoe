@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import TicTacSquare from "./TicTacSquare"
-import {click} from "@testing-library/user-event/dist/click";
 
 const TicTacBoard = ({size = 3}) => {
     const [squares, setSquares] = useState(Array(size).fill(null));
@@ -85,6 +84,15 @@ const TicTacBoard = ({size = 3}) => {
         if (winner() === 'o') setOWins(oWins + 1)
     }
 
+    const reset = () => {
+        setSquares(Array(9).fill(null))
+        setLength([])
+    }
+
+    useEffect(() => {
+        reset();
+    }, [size])
+
     const clickHandler = (i) => {
         if (winner()) return;
         const cloneLength = length;
@@ -133,10 +141,7 @@ const TicTacBoard = ({size = 3}) => {
             <StyledTicTacContainer size={size}>
                 {renderItems()}
             </StyledTicTacContainer>
-            <StyledReset onClick={() => {
-                setSquares(Array(9).fill(null))
-                setLength([])
-            }}>Reset</StyledReset>
+            <StyledReset onClick={reset}>Reset</StyledReset>
             <StyledWinners>X: {xWins} | O: {oWins} </StyledWinners>
         </>
     )

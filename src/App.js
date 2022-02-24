@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import SizeInput from "./Components/SizeInput";
 import TicTacBoard from "./Components/TicTacBoard";
